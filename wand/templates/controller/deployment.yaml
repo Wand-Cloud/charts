@@ -1,0 +1,73 @@
+{{ if .Values.controller.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "controller.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ template "controller.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{ if .Values.controller.wandControl -}}
+    wand.cloud/workload-is-controlled: "true"
+    {{- end }}
+spec:
+  replicas: {{ .Values.controller.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "controller.fullname" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ template "controller.fullname" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{ if .Values.controller.nodeSelector -}}
+      nodeSelector:
+        {{- toYaml .Values.controller.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{ if .Values.controller.tolerations -}}
+        tolerations:
+        {{- toYaml .Values.controller.tolerations | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "controller.fullname" . }}
+      containers:
+        - name: controller
+          image: {{ template "controller.image" . }}
+          env:
+            - name: API_USERNAME
+              value: "{{ include "auth.username" . }}"
+            - name: API_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: {{ include "auth.secretName" . }}
+            - name: CUSTOMER_ID
+              value: "{{ include "customerID" . }}"
+            - name: CLUSTER_ID
+              value: "{{ include "clusterID" . }}"
+            - name: POD_ID
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: MAIN_API_URL
+              value: "{{ include "api.url" .}}"
+            - name: DEBUG
+              value: "{{ .Values.controller.debugLog }}"
+            - name: MUTATOR_URL
+              value: {{ template "mutator.fullname" . }}
+            - name: CONFIG_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            {{- range $key, $value := .Values.controller.extraEnvVars }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+            {{- end }}
+          {{- if .Values.controller.resources }}
+          resources:
+          {{- .Values.controller.resources | toYaml | nindent 12 }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+{{- end }}

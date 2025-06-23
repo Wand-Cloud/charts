@@ -1,0 +1,53 @@
+name: Helm Lint
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'wand/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+
+      - name: Lint Helm Chart
+        run: |
+          helm dep up wand
+
+          # Lint with affinity enabled (default)
+          helm lint wand \
+            --set customerID="test-customer" \
+            --set clusterID="test-cluster" \
+            --set auth.token="dummy-token" \
+            --set mutator.disableAffinity=false
+          
+          # Lint with affinity disabled
+          helm lint wand \
+            --set customerID="test-customer" \
+            --set clusterID="test-cluster" \
+            --set auth.token="dummy-token" \
+            --set mutator.disableAffinity=true
+
+      - name: Test Helm Template
+        run: |
+          # Test templating with affinity enabled (default)
+          helm template wand \
+            --set customerID="test-customer" \
+            --set clusterID="test-cluster" \
+            --set auth.token="dummy-token" \
+            --set mutator.disableAffinity=false > /dev/null
+          
+          # Test templating with affinity disabled
+          helm template wand \
+            --set customerID="test-customer" \
+            --set clusterID="test-cluster" \
+            --set auth.token="dummy-token" \
+            --set mutator.disableAffinity=true > /dev/null

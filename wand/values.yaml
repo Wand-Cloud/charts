@@ -1,0 +1,193 @@
+# These values are required and are unique per cluster/customer
+# customerID: ""
+# clusterID: ""
+
+# URL override for possible private link
+# urlOverride: ""
+
+
+# If are using a differet method to insert secrets to the cluster make createSecret: false and add the following in your values:
+# prometheus:
+#   server:
+#     extraSecretMounts:
+#       - name: auth-file
+#         mountPath: /etc/config/auth
+#         secretName: <secretname>
+fullnameOverride: wand
+
+auth:
+  createSecret: true
+  # Here is the authentication token required if createSecret is true
+  # token: ""
+
+cadvisor:
+  kubelet:
+    enabled: true
+
+kubeStateMetrics:
+  enabled: true
+  prometheusScrape: false
+  fullnameOverride: wand-kube-state-metrics
+  nameOverride: wand-kube-state-metrics
+  replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+    limits:
+      memory: 1Gi
+  metricAllowlist:
+    - kube_pod_.*
+    - kube_deployment_labels
+    - kube_daemonset_labels
+    - kube_statefulset_labels
+    - kube_job_labels
+    - kube_cronjob_labels
+    - kube_.*_owner
+    - kube_deployment_status_replicas_ready
+    - kube_daemonset_status_number_ready
+    - kube_statefulset_status_replicas_ready
+    - kube_statefulset_status_replicas_ready
+    - kube_cronjob_status_active
+    - kube_node_.*
+    - kube_deployment_annotations
+    - kube_daemonset_annotations
+    - kube_statefulset_annotations
+    - kube_job_annotations
+    - kube_cronjob_annotations
+    - kube_horizontalpodautoscaler_.*
+    - kube_poddisruptionbudget_.*
+    - kube_resource.*
+    - kube_limit.*
+  metricLabelsAllowlist:
+    - pods=[wand.cloud/workload-name,wand.cloud/workload-uid,wand.cloud/workload-kind,wand.cloud/mutated]
+  extraArgs:
+    - --metric-opt-in-list=kube_pod_nodeselectors
+  collectors:
+  - cronjobs
+  - daemonsets
+  - deployments
+  - horizontalpodautoscalers
+  - jobs
+  - limitranges
+  - nodes
+  - persistentvolumeclaims
+  - persistentvolumes
+  - poddisruptionbudgets
+  - pods
+  - replicasets
+  - replicationcontrollers
+  - resourcequotas
+  - statefulsets
+
+nodeAgent:
+  enabled: true
+  tolerations:
+    - operator: Exists
+  fullnameOverride: wand-node-agent
+  nameOverride: wand-node-agent
+  service:
+    port: 9191
+    targetPort: 9191
+    annotations:
+      prometheus.io/scrape: "false"
+  resources:
+    requests:
+      cpu: 100m
+    limits:
+      memory: 100Mi
+  extraArgs:
+    - --web.telemetry-path=/wand-metrics
+  metricsPath: /wand-metrics
+
+prometheus:
+  enabled: true
+  rbac:
+    create: false
+  serviceAccounts:
+    server:
+      name: wand-prom-sa
+  configmapReload:
+    prometheus:
+      resources:
+        limits:
+          memory: 50Mi
+        requests:
+          cpu: 10m
+          memory: 30Mi
+  server:
+    fullnameOverride: wand-metrics-collector
+    clusterRoleName: wand-prom
+    replicaCount: 1
+    strategy:
+      type: RollingUpdate
+    configMapOverrideName: prometheus-yaml
+    persistentVolume:
+      enabled: false
+    resources:
+      limits:
+        memory: 8Gi
+        ephemeral-storage: 5Gi
+      requests:
+        cpu: 1
+        memory: 8Gi
+        ephemeral-storage: 5Gi
+    defaultFlagsOverride:
+      - --agent
+      - --storage.agent.retention.max-time=30m
+      - --config.file=/etc/config/prometheus.yml
+      - --web.console.libraries=/etc/prometheus/console_libraries
+      - --web.console.templates=/etc/prometheus/console
+      - --web.enable-lifecycle
+    extraSecretMounts:
+      - name: auth-file
+        mountPath: /etc/config/auth
+        secretName: auth-file
+  alertmanager:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+
+mutator:
+  enabled: true
+  name: mutator
+  replicas: 3
+  image:
+    repository: public.ecr.aws/wand/mutator
+    tag: v1.2.0
+    pullPolicy: Always
+  wandControl: false
+  debugLog: false
+  resources:
+    requests:
+      cpu: 1
+      memory: 500Mi
+      ephemeral-storage: 100Mi
+    limits:
+      memory: 500Mi
+      ephemeral-storage: 200Mi
+  pdb:
+    enabled: true
+  extraEnvVars: {}
+
+controller:
+  enabled: true
+  name: controller
+  replicas: 1
+  image:
+    repository: public.ecr.aws/wand/controller
+    tag: v1.0.0
+    pullPolicy: Always
+  wandControl: false
+  debugLog: false
+  resources:
+    requests:
+      cpu: 300m
+      memory: 2Gi
+      ephemeral-storage: 400Mi
+    limits:
+      memory: 2Gi
+      ephemeral-storage: 400Mi

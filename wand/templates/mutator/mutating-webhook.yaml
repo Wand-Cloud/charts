@@ -1,0 +1,32 @@
+{{- if .Values.mutator.enabled }}
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: {{ template "mutator.fullname" . }}
+webhooks:
+  - name: mutator.wand.cloud
+    clientConfig:
+      service:
+        name: {{ template "mutator.fullname" . }}
+        namespace: {{ .Release.Namespace }}
+        path: "/mutate"
+        port: 8443
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUdWekNDQkQrZ0F3SUJBZ0lVT1pkK3pwanlKSEo5SlU1S2tpSjRPSFZ2SnBJd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0tqRW9NQ1lHQTFVRUF3d2ZlVzkxY2kxM1pXSm9iMjlyTG5sdmRYSXRibUZ0WlhOd1lXTmxMbk4yWXpBZQpGdzB5TlRBMk1Ea3hOelUzTlRkYUZ3MHpOVEEyTURjeE56VTNOVGRhTUNveEtEQW1CZ05WQkFNTUgzbHZkWEl0CmQyVmlhRzl2YXk1NWIzVnlMVzVoYldWemNHRmpaUzV6ZG1Nd2dnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUMKRHdBd2dnSUtBb0lDQVFEbnpyVWlwYkdWQTdUZWxuUHNxSHhyYlBvMXRaWDFsL2o1cVJXc2ROQ083MUUzQlZ3RQpuQ3hHckZ0L1puZE9vOWtQTEZBc3JlMGtFNWtteWRyVk8wa1h0Y3BaME9xWm8zcldiOSs1ZG1GRE1MVEJ4ekFRCkRZQUtYdlZaczA5OS9vZWxDYTc0czlZOEprRk4wODgwVE1JZ1VaK1JjeFAvem00cS9MYUpKSjRocHNTTTdMdDUKa3lsS1FYM3Ivai82WEhRR1B6QmZvZWVtVkg1QlhwWE5maTAwREtOLzdVOXZlR3VZNGsrSy9YZE1wYWhJRjBvcApCdUNjenJ4ZkpyTEw5bDhnbzgzR0ZoekV6Tkl6VUhHSEh2Mm1STmhEU2RXRVduQVpBbW83RUprYmtldzJzejk1Cmkvc0wvb1RZbTVjTjBZVWxwbHIwWnRoTXFxcW4xUkpveTRRajJNVFUvb2FaeS9rLzJoamZERC9RbmNYWW9rWGsKditRZ3RaNHhvR21IUkZoQTE5My9HQ3dwTy9Tdm40S0RyL3FOMXh5N3RUUEpSVVV5SEpTZy8rc1JCbGI3Vkk2RAppU3ZPQ1NiUlRoQkYyODRxY1l2WHV4NFU1eWVvUUtWSnJWUWFwZi9uSUtwT1hDWjdkMFVYM1hza1o0dmJsbVIrCi9vcjlXTnBYejlyNFNDZHdabXJzcUNSam85ZWo2UkRDbVkzQkhVY3FCTzZOeHZnVEF0WWR4N09TUWxtUjZuQzkKMUpGNmN1ejR0VHZscU5kdXduU2V3TWdsaU40NTA4aWlSS001bldldDFuNlN3QVNYWWMydGJDajVsMXQ1RVNOSgo2SmVuZlZQRDZGeUoyS0JwVk41enpzdkVOQlpGTnZzUEJuazNBcGJESFpDajl0SWgrdHBRd3JJQ0JRSURBUUFCCm80SUJjekNDQVc4d2dnRk1CZ05WSFJFRWdnRkRNSUlCUDRJZmMyeHBiWE4wWVdOckxXMTFkR0YwYjNJdWMyeHAKYlhOMFlXTnJMbk4yWTRJclpHVjJaVzUyTFdSaGJpMXpiR2x0YzNSaFkyc3RiWFYwWVhSdmNpNWtaWFpsYm5ZdApaR0Z1TG5OMlk0SXRaR1YyWlc1MkxXOW1aV3N0YzJ4cGJYTjBZV05yTFcxMWRHRjBiM0l1WkdWMlpXNTJMVzltClpXc3VjM1pqZ2kxa1pYWmxibll0YzJocGNpMXpiR2x0YzNSaFkyc3RiWFYwWVhSdmNpNWtaWFpsYm5ZdGMyaHAKY2k1emRtT0NGWGRoYm1RdGJYVjBZWFJ2Y2k1M1lXNWtMbk4yWTRJbVpHVjJaVzUyTFdSaGJpMTNZVzVrTFcxMQpkR0YwYjNJdVpHVjJaVzUyTFdSaGJpNXpkbU9DS0dSbGRtVnVkaTF2Wm1WckxYZGhibVF0YlhWMFlYUnZjaTVrClpYWmxibll0YjJabGF5NXpkbU9DS0dSbGRtVnVkaTF6YUdseUxYZGhibVF0YlhWMFlYUnZjaTVrWlhabGJuWXQKYzJocGNpNXpkbU13SFFZRFZSME9CQllFRkxkWHJJV3ExREI5Z0ttMlFvWjNZY09kRS9ySk1BMEdDU3FHU0liMwpEUUVCQ3dVQUE0SUNBUUJibk4zYU9CNFRxUGl3MWNWdC8rbFp3dktPK3F2SWVOa0hjWEdUVDAyRUdpRjJyU3djClJMMjFOUXJNNkVOVXhTMnpGNWRLMGliOUc1ekxld1FrVllKckhHKzIra21tdy9NV1I4MUtyVlplUms1SXJ0SHEKSHZmVjhsL2IrVS9EUmJpcFhkWkh4NWxSV201U3lwcmFzNDRHeGVmcWI0V3pEUjNhQ1prZnhnbXpQcXVDYm9vUgp5UXZwNHpBaGM5b2w3U3lYRHN5dGdoUHZCNFdiM0JGenUxU0ljYTVhamxJNTVza3M2VXo0YlFlQTM3Z3hORjIxCjg0cU1GaHRVaGZVMzg2R2gxWmZlLzU3RDQrenNLQVU4VUhNSS9UZmsvRzJwOVM3YnM0c2lpR2dWbXFCU3Y4RFAKUnI2cFBGVWVRQ2VubHJudEFpV2xUSC82MWM3MUxVSEs2VlpuUXpkeERjanpIRlBIVnVwUGVUcXhJZkd1RlpVNApZbW56dnpUVWlQR0s4NkExWTNKU2o0N25EeHBLak4xSWZEZDBteXFRaXF1dUxPSzM0TVpuVGtObGY4RlNsaGFVCjU3eDZpMnFlZklSbkwzb3V6cmY5dkNNWHliZkMyUTIwZ1IyRU85OXZDYk1sZWMza2pDQ3h0QlJJYU1jOEJDVnoKS3BTVGVHZFlyOWRBMHlJdGFUK3p6N1VzTnZRMEJzNjRWWTJ4NkpiZmliOUZPenFIajVQb0lDZlRyMjNYSXFKOQo4QmhJT25ya01JN2twaGd3MDJoT3Buc21LMlBDanFMUk0yK1JKVEQ3UHQ3Y21COEhMYlJScXhpZERFa3plT1VpCjlmTUhYZStjZ0RhZXNoZ3lVOFhaVnltbk51VU9lSkI1cnNXNmdzMG5wb1pkWXJjbXk2cWhJR1cvdnc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods"]
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["*"]
+        apiVersions: ["*"]
+        resources: ["deployments", "statefulsets", "cronjobs", "daemonsets", "jobs"]
+    failurePolicy: Ignore
+    sideEffects: None
+    timeoutSeconds: 5
+    admissionReviewVersions: ["v1", "v1beta1"]
+    {{- if .Values.mutator.namespaceSelector }}
+    namespaceSelector:
+      {{- .Values.mutator.namespaceSelector | toYaml | nindent 6 }}
+    {{- end }}
+{{- end }}

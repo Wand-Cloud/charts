@@ -1,0 +1,78 @@
+{{- if .Values.mutator.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mutator.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ template "mutator.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{ if .Values.mutator.wandControl -}}
+    wand.cloud/workload-is-controlled: "true"
+    {{- end }}
+spec:
+  replicas: {{ .Values.mutator.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "mutator.fullname" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ template "mutator.fullname" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.mutator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.mutator.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.mutator.tolerations }}
+      tolerations:
+        {{- toYaml .Values.mutator.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if ne .Values.mutator.disableAffinity true }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - {{ template "mutator.fullname" . }}
+            topologyKey: "kubernetes.io/hostname"
+      {{- end }}
+      serviceAccountName: {{ template "mutator.fullname" . }}
+      containers:
+        - name: {{ template "mutator.fullname" . }}
+          image: {{ template "mutator.image" . }}
+          imagePullPolicy: {{ .Values.mutator.image.pullPolicy }}
+          env:
+            - name: "DEBUG"
+              value: "{{ .Values.mutator.debugLog }}"
+            - name: "CONFIG_NAMESPACE"
+              value: "{{ .Release.Namespace }}"
+            - name: "CUSTOMER_ID"
+              value: "{{ template "customerID" . }}"
+            - name: "CLUSTER_ID"
+              value: "{{ template "clusterID" . }}"
+            {{- range $key, $value := .Values.mutator.extraEnvVars }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - containerPort: 443
+          {{- if .Values.mutator.resources }}
+          resources:
+          {{- .Values.mutator.resources | toYaml | nindent 12 }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 443
+              scheme: HTTPS
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+{{- end }}

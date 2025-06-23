@@ -1,0 +1,35 @@
+name: Build and Index Helm Chart
+
+permissions:
+  contents: write
+  actions: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_index_chart:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build & Index Helm Chart
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git fetch --all
+          git checkout gh-pages
+          git checkout main -- wand
+          helm dep up wand
+          helm package wand
+          helm repo index --url https://wand-cloud.github.io/charts/ .
+          git add .
+          git commit -m "Update Helm chart index" || echo "No changes to commit"
+          git push
