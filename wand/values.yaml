@@ -15,6 +15,10 @@
 #         secretName: <secretname>
 fullnameOverride: wand
 
+# Read-only mode disables all write operations for security-conscious environments
+# When enabled, Wand will only monitor and analyze workloads without making modifications
+readOnlyMode: false
+
 auth:
   createSecret: true
   # Here is the authentication token required if createSecret is true

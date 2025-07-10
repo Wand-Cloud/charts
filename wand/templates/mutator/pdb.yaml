@@ -1,4 +1,4 @@
-{{- if and .Values.mutator.enabled .Values.mutator.pdb.enabled }}
+{{- if and .Values.mutator.enabled .Values.mutator.pdb.enabled (not .Values.readOnlyMode) }}
 {{- if ge (int .Values.mutator.replicas) 2 }}
 apiVersion: policy/v1
 kind: PodDisruptionBudget

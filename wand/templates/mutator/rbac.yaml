@@ -1,4 +1,4 @@
-{{- if .Values.mutator.enabled }}
+{{- if and .Values.mutator.enabled (not .Values.readOnlyMode) }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
