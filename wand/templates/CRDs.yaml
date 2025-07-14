@@ -115,6 +115,10 @@ spec:
                   type: boolean
                   default: false
                   description: "Skips the learning period for this workload."
+                oomRecovery:
+                  type: boolean
+                  default: true
+                  description: "Enables OOM recovery for this workload."
                 type:
                   type: string
                   enum:
