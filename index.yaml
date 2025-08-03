@@ -3,7 +3,33 @@ entries:
   wand:
   - apiVersion: v2
     appVersion: 1.3.0
-    created: "2025-07-14T15:00:40.857167114Z"
+    created: "2025-08-03T07:55:24.993445977Z"
+    dependencies:
+    - alias: prometheus
+      condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 27.11.0
+    - alias: kubeStateMetrics
+      condition: kubeStateMetrics.enabled
+      name: kube-state-metrics
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 5.33.*
+    - alias: nodeAgent
+      condition: nodeAgent.enabled
+      name: prometheus-node-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 4.45.*
+    description: Wand installation chart
+    digest: d227855c1615c5b10fde4603abaf3bcac70f3c69401ebd11ad42930daaca3f4b
+    name: wand
+    type: application
+    urls:
+    - https://wand-cloud.github.io/charts/wand-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    appVersion: 1.3.0
+    created: "2025-08-03T07:55:24.982655353Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -29,7 +55,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 1.3.0
-    created: "2025-07-14T15:00:40.847213954Z"
+    created: "2025-08-03T07:55:24.972817676Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -53,4 +79,4 @@ entries:
     urls:
     - https://wand-cloud.github.io/charts/wand-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-14T15:00:40.836945235Z"
+generated: "2025-08-03T07:55:24.962720122Z"
