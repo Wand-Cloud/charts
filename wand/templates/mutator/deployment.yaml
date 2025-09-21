@@ -50,7 +50,10 @@ spec:
             - name: "DEBUG"
               value: "{{ .Values.mutator.debugLog }}"
             - name: "CONFIG_NAMESPACE"
-              value: "{{ .Release.Namespace }}"
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
             - name: "CUSTOMER_ID"
               value: "{{ template "customerID" . }}"
             - name: "CLUSTER_ID"

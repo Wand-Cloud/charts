@@ -106,11 +106,19 @@ spec:
                   minimum: 0
                   default: 25
                   description: "CPU limit buffer as a percentage (0-100)."
+                cpuLimitMinBuffer:
+                  type: string
+                  pattern: '^([0-9]+m|[0-9]*\\.[0-9]+)$'
+                  description: "CPU limit minimum nominal buffer"
                 memoryLimitBuffer:
                   type: number
                   minimum: 0
                   default: 25
                   description: "Memory limit buffer as a percentage (0-100)."
+                memoryLimitMinBuffer:
+                  type: string
+                  pattern: '^([0-9]+(Ki|Mi|Gi|Ti|Pi|Ei))$'
+                  description: "Memory limit minimum nominal buffer"
                 skipLearningPeriod:
                   type: boolean
                   default: false
@@ -133,3 +141,13 @@ spec:
                 description:
                   type: string
                   description: "A brief description of the cluster workload."
+                workloadRuntimeBehavior:
+                  type: string
+                  description: "Manual discovery of workloads runtime"
+                learningWindow:
+                  type: number
+                  minimum: 0
+                  maximum: 30
+                  description: "Specify the Wand learning windows for the workload in days"
+                  
+                  
