@@ -90,21 +90,17 @@ spec:
                 hardMaxCPU:
                   type: string
                   pattern: '^([0-9]+m|[0-9]*\\.[0-9]+)$'
-                  default: "20000m"
                   description: "Hard maximum CPU for containers."
                 hardMaxMemory:
                   type: string
                   pattern: '^([0-9]+(Ki|Mi|Gi|Ti|Pi|Ei))$'
-                  default: "50Gi"
                   description: "Hard maximum memory for containers."
                 setCPULimits:
                   type: boolean
-                  default: false
                   description: "Determines whether CPU limits are set for this workload."
                 cpuLimitBuffer:
                   type: number
                   minimum: 0
-                  default: 25
                   description: "CPU limit buffer as a percentage (0-100)."
                 cpuLimitMinBuffer:
                   type: string
@@ -113,7 +109,6 @@ spec:
                 memoryLimitBuffer:
                   type: number
                   minimum: 0
-                  default: 25
                   description: "Memory limit buffer as a percentage (0-100)."
                 memoryLimitMinBuffer:
                   type: string
@@ -121,11 +116,9 @@ spec:
                   description: "Memory limit minimum nominal buffer"
                 skipLearningPeriod:
                   type: boolean
-                  default: false
                   description: "Skips the learning period for this workload."
                 oomRecovery:
                   type: boolean
-                  default: true
                   description: "Enables OOM recovery for this workload."
                 type:
                   type: string
@@ -144,6 +137,9 @@ spec:
                 workloadRuntimeBehavior:
                   type: string
                   description: "Manual discovery of workloads runtime"
+                workloadInPlaceResizeEnabled:
+                  type: boolean
+                  description: "Resize pod resources without a rollout (In-Place) when supported by your cluster. Falls back to a rollout if needed."
                 learningWindow:
                   type: number
                   minimum: 0

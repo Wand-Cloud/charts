@@ -78,4 +78,8 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             failureThreshold: 3
+          lifecycle:
+            preStop:
+              sleep:
+                seconds: 5
 {{- end }}
