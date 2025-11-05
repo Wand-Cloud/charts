@@ -311,6 +311,10 @@ data:
             - __tmp_hash
             regex: 0
             action: keep
+          - source_labels: 
+            - __meta_kubernetes_pod_node_name
+            target_label: node
+            action: replace
         metric_relabel_configs: 
           - regex: service
             action: labeldrop
