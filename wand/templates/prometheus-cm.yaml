@@ -389,6 +389,10 @@ data:
         basic_auth:
           username: {{ include "auth.username" . }}
           password_file: {{ include "auth.filePath" . }}
+        write_relabel_configs:
+          - source_labels: [__name__]
+            regex: "kube_pod_tolerations|node_filesystem_.*"
+            action: drop
     storage:
       tsdb:
         out_of_order_time_window: 0s
