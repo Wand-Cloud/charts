@@ -37,6 +37,7 @@ kubeStateMetrics:
   resources:
     requests:
       cpu: 200m
+      memory: 1Gi
     limits:
       memory: 1Gi
   metricAllowlist:
@@ -132,7 +133,7 @@ prometheus:
         memory: 8Gi
         ephemeral-storage: 5Gi
       requests:
-        cpu: 1
+        cpu: 2
         memory: 8Gi
         ephemeral-storage: 5Gi
     defaultFlagsOverride:
@@ -161,7 +162,7 @@ mutator:
   replicas: 3
   image:
     repository: public.ecr.aws/wand/mutator
-    tag: v1.7.1
+    tag: v1.8.0
     pullPolicy: Always
   wandControl: false
   debugLog: false
@@ -183,15 +184,15 @@ controller:
   replicas: 1
   image:
     repository: public.ecr.aws/wand/controller
-    tag: v1.7.3
+    tag: v1.11.1
     pullPolicy: Always
   wandControl: false
   debugLog: false
   resources:
     requests:
-      cpu: 300m
-      memory: 2Gi
+      cpu: 2
+      memory: 8Gi
       ephemeral-storage: 400Mi
     limits:
-      memory: 2Gi
+      memory: 8Gi
       ephemeral-storage: 400Mi
