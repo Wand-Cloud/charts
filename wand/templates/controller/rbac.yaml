@@ -10,8 +10,11 @@ metadata:
   name: {{ template "controller.fullname" . }}
 rules:
   - apiGroups: [""]
-    resources: ["services", "nodes", "resourcequotas", "persistentvolumes", "persistentvolumeclaims", "namespaces", "events"]
+    resources: ["services", "resourcequotas", "persistentvolumes", "persistentvolumeclaims", "namespaces", "events"]
     verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"{{- if not .Values.readOnlyMode }}, "update", "patch", "delete"{{- end }}]
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "watch", "update", "patch"{{- if not .Values.readOnlyMode }}, "delete"{{- end }}]
