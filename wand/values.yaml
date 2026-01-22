@@ -162,7 +162,7 @@ mutator:
   replicas: 3
   image:
     repository: public.ecr.aws/wand/mutator
-    tag: v1.8.1
+    tag: v1.9.0
     pullPolicy: Always
   wandControl: false
   debugLog: false
@@ -184,7 +184,7 @@ controller:
   replicas: 1
   image:
     repository: public.ecr.aws/wand/controller
-    tag: v1.12.4
+    tag: v1.13.0
     pullPolicy: Always
   wandControl: false
   debugLog: false
