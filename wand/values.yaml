@@ -184,7 +184,7 @@ controller:
   replicas: 1
   image:
     repository: public.ecr.aws/wand/controller
-    tag: v1.13.0
+    tag: v1.15.1
     pullPolicy: Always
   wandControl: false
   debugLog: false
