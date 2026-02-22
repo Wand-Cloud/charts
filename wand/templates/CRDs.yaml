@@ -140,6 +140,9 @@ spec:
                 workloadInPlaceResizeEnabled:
                   type: boolean
                   description: "Resize pod resources without a rollout (In-Place) when supported by your cluster. Falls back to a rollout if needed."
+                hpaControlEnabled:
+                  type: boolean
+                  description: "Enables HPA control for this workload."
                 learningWindow:
                   type: number
                   minimum: 0
