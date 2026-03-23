@@ -162,7 +162,7 @@ mutator:
   replicas: 3
   image:
     repository: public.ecr.aws/wand/mutator
-    tag: v1.9.0
+    tag: v1.11.0
     pullPolicy: Always
   wandControl: false
   debugLog: false
@@ -184,7 +184,7 @@ controller:
   replicas: 1
   image:
     repository: public.ecr.aws/wand/controller
-    tag: v1.15.2
+    tag: v1.18.0
     pullPolicy: Always
   wandControl: false
   debugLog: false
@@ -196,3 +196,30 @@ controller:
     limits:
       memory: 8Gi
       ephemeral-storage: 400Mi
+
+workloadDefaults:
+  enabled: false
+  config:
+    All:
+      autoRollout: false
+      controlled: false
+      cpuLimitBuffer: 20
+      cpuLimitMinBuffer: "10m"
+      enableInPlaceResize: false
+      hardMaxCPU: "20"
+      hardMaxMemory: "50Gi"
+      learningWindow: 14
+      memoryLimitBuffer: 20
+      memoryLimitMinBuffer: "512Mi"
+      oomRecovery: true
+      setCpuLimits: false
+      skipLearningPeriod: false
+      workloadRuntimeBehavior: ""
+    Deployment:
+      autoRollout: true
+    Rollout:
+      autoRollout: true
+    GroupOfDeployments:
+      autoRollout: true
+    GroupOfRollouts:
+      autoRollout: true

@@ -21,6 +21,14 @@ webhooks:
         apiGroups: ["*"]
         apiVersions: ["*"]
         resources: ["deployments", "statefulsets", "cronjobs", "daemonsets", "jobs"]
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["autoscaling"]
+        apiVersions: ["v2"]
+        resources: ["horizontalpodautoscalers"]
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["keda.sh"]
+        apiVersions: ["v1alpha1"]
+        resources: ["scaledobjects"]
     failurePolicy: Ignore
     sideEffects: None
     timeoutSeconds: 5

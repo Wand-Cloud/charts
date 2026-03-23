@@ -140,9 +140,10 @@ spec:
                 workloadInPlaceResizeEnabled:
                   type: boolean
                   description: "Resize pod resources without a rollout (In-Place) when supported by your cluster. Falls back to a rollout if needed."
-                hpaControlEnabled:
-                  type: boolean
-                  description: "Enables HPA control for this workload."
+                hpaBehavior:
+                  type: string
+                  enum: ["none", "convertUtilizationToValue"]
+                  description: "Controls HPA behavior for this workload. 'none' means Wand does not modify the HPA. 'convertUtilizationToValue' converts percentage-based metrics to absolute values."
                 learningWindow:
                   type: number
                   minimum: 0
