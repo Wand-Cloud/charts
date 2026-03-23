@@ -1,0 +1,13 @@
+{{- if .Values.workloadDefaults.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wand-workload-settings-defaults
+  labels:
+    app.kubernetes.io/managed-by: wand
+    wand.cloud/config-type: workload-defaults
+data:
+  defaults.yaml: |
+    workload_attributes_defaults:
+      {{- .Values.workloadDefaults.config | toYaml | nindent 6 }}
+{{- end }}
