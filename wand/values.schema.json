@@ -89,6 +89,19 @@
           "type": "string",
           "description": "Workload runtime behavior hint for tuning recommendations",
           "enum": ["", "none", "java"]
+        },
+        "hardMinCPU": {
+          "type": "string",
+          "description": "Hard minimum CPU (Kubernetes resource quantity, e.g. '100m'). Empty string means no minimum."
+        },
+        "hardMinMemory": {
+          "type": "string",
+          "description": "Hard minimum memory (Kubernetes resource quantity, e.g. '256Mi'). Empty string means no minimum."
+        },
+        "hpaBehavior": {
+          "type": "string",
+          "description": "Controls HPA behavior for the workload. 'none' means Wand does not modify the HPA. 'convertUtilizationToValue' converts percentage-based metrics to absolute values.",
+          "enum": ["none", "convertUtilizationToValue"]
         }
       },
       "additionalProperties": false

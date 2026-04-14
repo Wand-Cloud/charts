@@ -65,6 +65,10 @@ spec:
             - name: "{{ $key }}"
               value: "{{ $value }}"
             {{- end }}
+          ports:
+            - name: webhook
+              containerPort: 9443
+              protocol: TCP
           {{- if .Values.controller.resources }}
           resources:
           {{- .Values.controller.resources | toYaml | nindent 12 }}

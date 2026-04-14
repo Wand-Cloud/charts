@@ -62,6 +62,12 @@ spec:
             - name: "{{ $key }}"
               value: "{{ $value }}"
             {{- end }}
+          {{- if .Values.mutator.generateCertificate }}
+          volumeMounts:
+            - name: tls-certs
+              mountPath: "/etc/tls-certs"
+              readOnly: true
+          {{- end }}
           ports:
             - containerPort: 443
           {{- if .Values.mutator.resources }}
@@ -82,4 +88,15 @@ spec:
             preStop:
               sleep:
                 seconds: 5
+      {{- if .Values.mutator.generateCertificate }}
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: {{ .Values.mutator.secretName }}
+            items:
+            - key: cert
+              path: tls.crt
+            - key: key
+              path: tls.key
+      {{- end }}
 {{- end }}
