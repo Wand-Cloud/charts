@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "controller.fullname" . }}-metrics
+  name: {{ template "controller.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ template "controller.fullname" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -14,4 +14,7 @@ spec:
     - name: metrics
       port: 8080
       targetPort: 8080
+    - name: webhook
+      port: 9443
+      targetPort: 9443
 {{- end }}

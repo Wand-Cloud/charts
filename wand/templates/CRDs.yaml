@@ -36,11 +36,9 @@ spec:
               type: object
               required:
                 - type
-                - controlled
               properties:
                 controlled:
                   type: boolean
-                  default: false
                   description: "Indicates whether the workload is controlled by Wand."
                 autoRollout:
                   type: boolean
@@ -149,5 +147,3 @@ spec:
                   minimum: 0
                   maximum: 30
                   description: "Specify the Wand learning windows for the workload in days"
-                  
-                  
