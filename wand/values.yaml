@@ -229,7 +229,7 @@ workloadDefaults:
       autoRollout: false
       cpuLimitBuffer: 20
       cpuLimitMinBuffer: "10m"
-      enableInPlaceResize: false
+      enableInPlaceResize: true
       hardMaxCPU: "20"
       hardMaxMemory: "50Gi"
       memoryLimitBuffer: 25
