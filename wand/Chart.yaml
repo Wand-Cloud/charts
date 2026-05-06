@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: "1.19.2"
+appVersion: "1.19.3"
 description: Wand installation chart
 name: wand
 type: application
-version: 1.19.3
+version: 1.19.4
 dependencies:
 - alias: prometheus
   condition: prometheus.enabled
