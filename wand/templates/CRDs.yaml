@@ -118,6 +118,11 @@ spec:
                 oomRecovery:
                   type: boolean
                   description: "Enables OOM recovery for this workload."
+                oomProtectionWindowHours:
+                  type: integer
+                  minimum: 1
+                  maximum: 168
+                  description: "How long (in hours) after an OOM event the memory hard-minimum is enforced. Defaults to 24."
                 type:
                   type: string
                   enum:

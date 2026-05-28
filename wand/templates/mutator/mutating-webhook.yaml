@@ -32,6 +32,7 @@ webhooks:
         apiVersions: ["v1alpha1"]
         resources: ["scaledobjects"]
     failurePolicy: Ignore
+    reinvocationPolicy: IfNeeded
     sideEffects: None
     timeoutSeconds: 5
     admissionReviewVersions: ["v1", "v1beta1"]
