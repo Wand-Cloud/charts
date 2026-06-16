@@ -6,9 +6,6 @@ metadata:
 webhooks:
   - name: mutator.wand.cloud
     clientConfig:
-      {{- if not .Values.mutator.generateCertificate }}
-      caBundle: {{ .Values.mutator.caBundle | default "" }}
-      {{- end }}
       service:
         name: {{ template "mutator.fullname" . }}
         namespace: {{ .Release.Namespace }}
