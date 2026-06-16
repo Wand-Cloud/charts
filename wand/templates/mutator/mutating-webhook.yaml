@@ -3,6 +3,8 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
   name: {{ template "mutator.fullname" . }}
+  annotations:
+    "argocd.argoproj.io/sync-wave": "-3"
 webhooks:
   - name: mutator.wand.cloud
     clientConfig:
