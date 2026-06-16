@@ -74,4 +74,18 @@ spec:
           {{- .Values.controller.resources | toYaml | nindent 12 }}
           {{- end }}
           imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+          volumeMounts:
+            - name: tls-certs
+              mountPath: "/etc/tls-certs"
+              readOnly: true
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: {{ .Values.webhookCert.secretName }}
+            optional: true
+            items:
+            - key: cert
+              path: tls.crt
+            - key: key
+              path: tls.key
 {{- end }}
