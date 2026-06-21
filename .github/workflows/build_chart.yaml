@@ -26,6 +26,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git fetch --all
           git checkout gh-pages
+          rm -rf wand
           git checkout main -- wand
           helm dep up wand
           helm package wand
