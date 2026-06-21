@@ -58,6 +58,8 @@ spec:
               value: "{{ template "customerID" . }}"
             - name: "CLUSTER_ID"
               value: "{{ template "clusterID" . }}"
+            - name: "MWC_NAME"
+              value: {{ include "mutator.fullname" . | quote }}
             {{- range $key, $value := .Values.mutator.extraEnvVars }}
             - name: "{{ $key }}"
               value: "{{ $value }}"
