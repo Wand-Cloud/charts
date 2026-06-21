@@ -61,6 +61,14 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
+            - name: WEBHOOK_SECRET_NAME
+              value: {{ .Values.webhookCert.secretName | quote }}
+            - name: CONTROLLER_SERVICE
+              value: {{ include "controller.fullname" . | quote }}
+            - name: VWC_NAME
+              value: "wand-workload-defaults-protection"
+            - name: READ_ONLY_MODE
+              value: "{{ .Values.readOnlyMode }}"
             {{- range $key, $value := .Values.controller.extraEnvVars }}
             - name: "{{ $key }}"
               value: "{{ $value }}"
@@ -69,6 +77,19 @@ spec:
             - name: webhook
               containerPort: 9443
               protocol: TCP
+            - name: readiness
+              containerPort: 8081
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
           {{- if .Values.controller.resources }}
           resources:
           {{- .Values.controller.resources | toYaml | nindent 12 }}
