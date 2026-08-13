@@ -69,6 +69,8 @@ spec:
               value: "wand-workload-defaults-protection"
             - name: READ_ONLY_MODE
               value: "{{ .Values.readOnlyMode }}"
+            - name: CHART_VERSION
+              value: {{ .Chart.Version | quote }}
             {{- range $key, $value := .Values.controller.extraEnvVars }}
             - name: "{{ $key }}"
               value: "{{ $value }}"
