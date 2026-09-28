@@ -2,8 +2,34 @@ apiVersion: v1
 entries:
   wand:
   - apiVersion: v2
+    appVersion: 1.25.1
+    created: "2026-09-28T20:04:57.070110074Z"
+    dependencies:
+    - alias: prometheus
+      condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 27.11.0
+    - alias: kubeStateMetrics
+      condition: kubeStateMetrics.enabled
+      name: kube-state-metrics
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 5.33.*
+    - alias: nodeAgent
+      condition: nodeAgent.enabled
+      name: prometheus-node-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 4.45.*
+    description: Wand installation chart
+    digest: 91b362437b9a5adb95a366992260242de2dcbaab491e7e3fa9838012db882a38
+    name: wand
+    type: application
+    urls:
+    - https://wand-cloud.github.io/charts/wand-1.25.0.tgz
+    version: 1.25.0
+  - apiVersion: v2
     appVersion: 1.22.3
-    created: "2026-08-13T10:38:41.655507642Z"
+    created: "2026-09-28T20:04:57.056168475Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -29,7 +55,7 @@ entries:
     version: 1.23.0
   - apiVersion: v2
     appVersion: 1.20.1
-    created: "2026-08-13T10:38:41.6457134Z"
+    created: "2026-09-28T20:04:57.042967995Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -55,7 +81,7 @@ entries:
     version: 1.21.3
   - apiVersion: v2
     appVersion: 1.20.1
-    created: "2026-08-13T10:38:41.63675903Z"
+    created: "2026-09-28T20:04:57.030385368Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -81,7 +107,7 @@ entries:
     version: 1.21.2
   - apiVersion: v2
     appVersion: 1.20.1
-    created: "2026-08-13T10:38:41.627740422Z"
+    created: "2026-09-28T20:04:57.01354189Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -107,7 +133,7 @@ entries:
     version: 1.21.1
   - apiVersion: v2
     appVersion: 1.20.0
-    created: "2026-08-13T10:38:41.61841865Z"
+    created: "2026-09-28T20:04:57.001798889Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -133,7 +159,7 @@ entries:
     version: 1.20.3
   - apiVersion: v2
     appVersion: 1.20.0
-    created: "2026-08-13T10:38:41.607387731Z"
+    created: "2026-09-28T20:04:56.987907886Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -159,7 +185,7 @@ entries:
     version: 1.20.2
   - apiVersion: v2
     appVersion: 1.19.8
-    created: "2026-08-13T10:38:41.579674293Z"
+    created: "2026-09-28T20:04:56.943374008Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -185,7 +211,7 @@ entries:
     version: 1.19.9
   - apiVersion: v2
     appVersion: 1.19.3
-    created: "2026-08-13T10:38:41.569379502Z"
+    created: "2026-09-28T20:04:56.928608487Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -211,7 +237,7 @@ entries:
     version: 1.19.4
   - apiVersion: v2
     appVersion: 1.19.2
-    created: "2026-08-13T10:38:41.560225368Z"
+    created: "2026-09-28T20:04:56.914623573Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -237,7 +263,7 @@ entries:
     version: 1.19.3
   - apiVersion: v2
     appVersion: 1.19.1
-    created: "2026-08-13T10:38:41.550906338Z"
+    created: "2026-09-28T20:04:56.898052722Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -263,7 +289,7 @@ entries:
     version: 1.19.2
   - apiVersion: v2
     appVersion: 1.19.1
-    created: "2026-08-13T10:38:41.540950016Z"
+    created: "2026-09-28T20:04:56.885704978Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -289,7 +315,7 @@ entries:
     version: 1.19.1
   - apiVersion: v2
     appVersion: 1.18.0
-    created: "2026-08-13T10:38:41.748056024Z"
+    created: "2026-09-28T20:04:57.209954463Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -315,7 +341,7 @@ entries:
     version: 1.4.3
   - apiVersion: v2
     appVersion: 1.15.2
-    created: "2026-08-13T10:38:41.738740738Z"
+    created: "2026-09-28T20:04:57.193262281Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -341,7 +367,7 @@ entries:
     version: 1.4.2
   - apiVersion: v2
     appVersion: 1.15.1
-    created: "2026-08-13T10:38:41.729157114Z"
+    created: "2026-09-28T20:04:57.179274783Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -367,7 +393,7 @@ entries:
     version: 1.4.1
   - apiVersion: v2
     appVersion: 1.13.0
-    created: "2026-08-13T10:38:41.720139436Z"
+    created: "2026-09-28T20:04:57.167264693Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -393,7 +419,7 @@ entries:
     version: 1.4.0
   - apiVersion: v2
     appVersion: 1.12.4
-    created: "2026-08-13T10:38:41.709911076Z"
+    created: "2026-09-28T20:04:57.150208356Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -419,7 +445,7 @@ entries:
     version: 1.3.5
   - apiVersion: v2
     appVersion: 1.12.3
-    created: "2026-08-13T10:38:41.700775685Z"
+    created: "2026-09-28T20:04:57.138523332Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -445,7 +471,7 @@ entries:
     version: 1.3.4
   - apiVersion: v2
     appVersion: 1.11.1
-    created: "2026-08-13T10:38:41.691095847Z"
+    created: "2026-09-28T20:04:57.123252195Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -471,7 +497,7 @@ entries:
     version: 1.3.3
   - apiVersion: v2
     appVersion: 1.7.3
-    created: "2026-08-13T10:38:41.682293602Z"
+    created: "2026-09-28T20:04:57.111502284Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -497,7 +523,7 @@ entries:
     version: 1.3.2
   - apiVersion: v2
     appVersion: 1.7.3
-    created: "2026-08-13T10:38:41.673437487Z"
+    created: "2026-09-28T20:04:57.096109044Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -523,7 +549,7 @@ entries:
     version: 1.3.1
   - apiVersion: v2
     appVersion: 1.7.3
-    created: "2026-08-13T10:38:41.664564805Z"
+    created: "2026-09-28T20:04:57.083826296Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -549,7 +575,7 @@ entries:
     version: 1.3.0
   - apiVersion: v2
     appVersion: 1.6.1
-    created: "2026-08-13T10:38:41.598258764Z"
+    created: "2026-09-28T20:04:56.972608787Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -575,7 +601,7 @@ entries:
     version: 1.2.3
   - apiVersion: v2
     appVersion: 1.5.1
-    created: "2026-08-13T10:38:41.589487024Z"
+    created: "2026-09-28T20:04:56.955246743Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -601,7 +627,7 @@ entries:
     version: 1.2.2
   - apiVersion: v2
     appVersion: 1.3.0
-    created: "2026-08-13T10:38:41.531432853Z"
+    created: "2026-09-28T20:04:56.872826478Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -627,7 +653,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: 1.3.0
-    created: "2026-08-13T10:38:41.521660304Z"
+    created: "2026-09-28T20:04:56.857535161Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -653,7 +679,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 1.3.0
-    created: "2026-08-13T10:38:41.512456901Z"
+    created: "2026-09-28T20:04:56.846003206Z"
     dependencies:
     - alias: prometheus
       condition: prometheus.enabled
@@ -677,4 +703,4 @@ entries:
     urls:
     - https://wand-cloud.github.io/charts/wand-1.0.0.tgz
     version: 1.0.0
-generated: "2026-08-13T10:38:41.501833375Z"
+generated: "2026-09-28T20:04:56.829738433Z"
