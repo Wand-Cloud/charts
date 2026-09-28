@@ -43,48 +43,6 @@ spec:
                 autoRollout:
                   type: boolean
                   description: "Enables automatic rollout for this workload."
-                baselineResources:
-                  type: object
-                  description: "Defines baseline resources per container."
-                  properties:
-                    containers:
-                      type: array
-                      description: "List of containers with baseline resource settings."
-                      items:
-                        type: object
-                        required:
-                          - name
-                          - resources
-                        properties:
-                          name:
-                            type: string
-                            description: "Container name."
-                          resources:
-                            type: object
-                            description: "Baseline resource requests and limits."
-                            properties:
-                              requests:
-                                type: object
-                                properties:
-                                  cpu:
-                                    type: string
-                                    pattern: '^([0-9]+m|[0-9]*\\.[0-9]+)$'
-                                    description: "CPU request for this container."
-                                  memory:
-                                    type: string
-                                    pattern: '^([0-9]+(Ki|Mi|Gi|Ti|Pi|Ei))$'
-                                    description: "Memory request for this container."
-                              limits:
-                                type: object
-                                properties:
-                                  cpu:
-                                    type: string
-                                    pattern: '^([0-9]+m|[0-9]*\\.[0-9]+)$'
-                                    description: "CPU limit for this container."
-                                  memory:
-                                    type: string
-                                    pattern: '^([0-9]+(Ki|Mi|Gi|Ti|Pi|Ei))$'
-                                    description: "Memory limit for this container."
                 hardMaxCPU:
                   type: string
                   pattern: '^([0-9]+m|[0-9]*\\.[0-9]+)$'
@@ -147,8 +105,3 @@ spec:
                   type: string
                   enum: ["none", "convertUtilizationToValue"]
                   description: "Controls HPA behavior for this workload. 'none' means Wand does not modify the HPA. 'convertUtilizationToValue' converts percentage-based metrics to absolute values."
-                learningWindow:
-                  type: number
-                  minimum: 0
-                  maximum: 30
-                  description: "Specify the Wand learning windows for the workload in days"
